@@ -46,7 +46,7 @@ export default function Comunidade() {
               { titulo: 'Oração Comum', desc: 'Começamos cada dia com a Liturgia das Horas e a Santa Missa, o centro da vida do Seminário.' },
               { titulo: 'Estudo e Formação', desc: 'Aulas de Filosofia e Teologia, seminários de investigação e leitura espiritual estruturam o dia académico.' },
               { titulo: 'Convívio Fraterno', desc: 'Refeições partilhadas, actividades desportivas e culturais constroem laços de fraternidade duradouros.' },
-              { titulo: 'Serviço Pastoral', desc: 'Aos fins-de-semana, os seminaristas participam na pastoral das paróquias da Diocese do Huambo.' },
+              { titulo: 'Serviço Pastoral', desc: 'Aos fins-de-semana, os seminaristas participam na pastoral das paróquias da Arquidiocese do Huambo.' },
             ].map(v => (
               <div key={v.titulo} className="card">
                 <h3 className="font-semibold text-gray-900 mb-3 text-lg">{v.titulo}</h3>

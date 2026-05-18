@@ -25,7 +25,7 @@ export default function Seminario() {
                   "O Seminário Maior de Cristo Rei é uma casa onde jovens angolanos se preparam para servir a Deus e ao seu povo como sacerdotes. É uma comunidade onde a oração, o estudo e a fraternidade formam homens de Deus."
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  Fundado em 1954 pela Diocese do Huambo, o Seminário já formou mais de duzentos sacerdotes que servem em Angola e além-fronteiras. A nossa missão é a formação integral do futuro sacerdote, nas suas dimensões humana, espiritual, intelectual e pastoral.
+                  Fundado em 1954 pela Arquidiocese do Huambo, o Seminário já formou mais de duzentos sacerdotes que servem em Angola e além-fronteiras. A nossa missão é a formação integral do futuro sacerdote, nas suas dimensões humana, espiritual, intelectual e pastoral.
                 </p>
               </div>
             </div>
@@ -39,7 +39,7 @@ export default function Seminario() {
           <h2 className="section-title text-center mb-12">História e Património</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { ano: '1954', titulo: 'Fundação', desc: 'O Seminário é fundado pela Diocese do Huambo para responder às necessidades da Igreja local.' },
+              { ano: '1954', titulo: 'Fundação', desc: 'O Seminário é fundado pela Arquidiocese do Huambo para responder às necessidades da Igreja local.' },
               { ano: '1975', titulo: 'Independência', desc: 'Durante os desafios da independência, o Seminário manteve-se firme na sua missão formativa.' },
               { ano: '2002', titulo: 'Reconstrução', desc: 'Com o fim da guerra civil, o Seminário inicia uma fase de expansão e modernização das suas instalações.' },
               { ano: '2010', titulo: 'Crescimento', desc: 'Abertura de novas instalações académicas e aumento do número de seminaristas.' },

@@ -30,7 +30,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('/hero-bg.jpg')] bg-cover bg-center opacity-20" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="max-w-3xl">
-            <p className="text-primary-300 text-sm uppercase tracking-widest mb-4 font-medium">Diocese do Huambo · Angola</p>
+            <p className="text-primary-300 text-sm uppercase tracking-widest mb-4 font-medium">Arquidiocese do Huambo · Angola</p>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-tight mb-6">
               Seminário Maior<br />
               <span className="text-primary-400">de Cristo Rei</span>

@@ -18,7 +18,7 @@ export default function Noticias() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-primary-300 text-sm uppercase tracking-widest mb-4">Actualidade</p>
           <h1 className="text-5xl font-serif font-bold mb-6">Notícias</h1>
-          <p className="text-xl text-gray-300 leading-relaxed">O que se passa no Seminário e na Diocese do Huambo.</p>
+          <p className="text-xl text-gray-300 leading-relaxed">O que se passa no Seminário e na Arquidiocese do Huambo.</p>
         </div>
       </section>
 
