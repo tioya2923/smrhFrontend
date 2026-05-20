@@ -38,9 +38,14 @@ export function AuthProvider({ children }) {
   const isAdmin = user?.permissoes === 'admin';
   const isStaff = user?.permissoes === 'staff' || isAdmin;
   const isSeminarista = user?.permissoes === 'seminarista';
+  const isSuperAdmin = isAdmin && !user?.seccao;
+  const seccao = user?.seccao ?? null;
+  const seccaoLabel = seccao === 'teologia' ? 'Secção de Teologia'
+    : seccao === 'filosofia' ? 'Secção de Filosofia'
+    : null;
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, isAdmin, isStaff, isSeminarista }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, isAdmin, isStaff, isSeminarista, isSuperAdmin, seccao, seccaoLabel }}>
       {children}
     </AuthContext.Provider>
   );

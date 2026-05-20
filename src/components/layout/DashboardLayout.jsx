@@ -40,6 +40,11 @@ export default function DashboardLayout() {
             <div className="overflow-hidden">
               <p className="text-sm font-medium truncate">{user?.nome}</p>
               <p className="text-xs text-gray-400 capitalize">{user?.permissoes} {user?.ano_formacao ? `· Ano ${user.ano_formacao}` : ''}</p>
+              {user?.seccao && (
+                <span className={`inline-block mt-1 text-xs px-2 py-0.5 rounded-full font-medium ${user.seccao === 'teologia' ? 'bg-blue-700 text-blue-100' : 'bg-amber-700 text-amber-100'}`}>
+                  {user.seccao === 'teologia' ? 'Teologia' : 'Filosofia'}
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -78,7 +83,9 @@ export default function DashboardLayout() {
           <button onClick={() => setSidebarOpen(true)} className="text-gray-600 hover:text-gray-800">
             <Menu size={22} />
           </button>
-          <span className="font-semibold text-gray-800">Painel do Seminarista</span>
+          <span className="font-semibold text-gray-800">
+            {user?.seccao === 'teologia' ? 'Painel · Teologia' : user?.seccao === 'filosofia' ? 'Painel · Filosofia' : 'Painel'}
+          </span>
         </header>
 
         <main className="flex-1 overflow-y-auto p-4 sm:p-6">

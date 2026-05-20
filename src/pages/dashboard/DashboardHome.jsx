@@ -15,8 +15,11 @@ export default function DashboardHome() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Olá, {user?.nome?.split(' ')[0]} 👋</h1>
-        <p className="text-gray-500 text-sm mt-1">Bem-vindo ao seu painel. Ano de Formação: {user?.ano_formacao || '—'}</p>
+        <h1 className="text-2xl font-bold text-gray-900">Olá, {user?.nome?.split(' ')[0]}</h1>
+        <p className="text-gray-500 text-sm mt-1">
+          {user?.seccao === 'teologia' ? 'Secção de Teologia' : user?.seccao === 'filosofia' ? 'Secção de Filosofia' : 'Seminário Maior de Cristo Rei'}
+          {user?.ano_formacao ? ` · ${user.ano_formacao}º Ano` : ''}
+        </p>
       </div>
 
       {/* Alerta propina */}

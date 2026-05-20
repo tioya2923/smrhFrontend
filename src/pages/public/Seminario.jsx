@@ -1,75 +1,193 @@
+const seccoes = [
+  {
+    id: 'teologia',
+    titulo: 'Secção de Teologia',
+    cor: 'border-blue-500',
+    badge: 'bg-blue-100 text-blue-700',
+    reitor: 'Pe. António Lúcio Ferreira',
+    cargo: 'Reitor da Secção de Teologia',
+    citacao: '"A Teologia é a ciência da fé. Aqui formamos homens que pensam com a Igreja e servem o povo de Deus com profundidade intelectual e ardor apostólico."',
+    descricao: 'A Secção de Teologia acolhe os seminaristas que, após concluírem os estudos filosóficos, avançam para a formação teológica específica que os prepara para o presbiterado. O percurso académico dura quatro anos e culmina com a ordenação diaconal e sacerdotal.',
+    anos: 4,
+    disciplinas: ['Sagrada Escritura (AT e NT)', 'Teologia Sistemática', 'Teologia Moral', 'Patrística', 'Liturgia e Sacramentos', 'Direito Canónico', 'Teologia Pastoral', 'Homilética'],
+    equipa: [
+      { nome: 'Pe. António Lúcio Ferreira', cargo: 'Reitor' },
+      { nome: 'Pe. João Paulo Mendes', cargo: 'Vice-Reitor e Prefeito de Disciplina' },
+      { nome: 'Pe. Manuel Costa Silva', cargo: 'Director Espiritual' },
+    ],
+    stats: [
+      { valor: '8', desc: 'Seminaristas' },
+      { valor: '4', desc: 'Anos de formação' },
+      { valor: '3', desc: 'Membros da Direcção' },
+    ],
+  },
+  {
+    id: 'filosofia',
+    titulo: 'Secção de Filosofia',
+    cor: 'border-amber-500',
+    badge: 'bg-amber-100 text-amber-700',
+    reitor: 'Pe. Carlos Eduardo Neto',
+    cargo: 'Reitor da Secção de Filosofia',
+    citacao: '"A Filosofia forma homens que interrogam, que pensam, que buscam a verdade. É o alicerce indispensável sobre o qual se edificará toda a formação teológica."',
+    descricao: 'A Secção de Filosofia é o primeiro grau da formação seminarística no Seminário Maior. Os candidatos ao sacerdócio iniciam aqui o seu percurso, adquirindo os fundamentos filosóficos, humanísticos e espirituais necessários para os estudos teológicos subsequentes. O curso tem a duração de três anos.',
+    anos: 3,
+    disciplinas: ['Filosofia Geral', 'Lógica e Epistemologia', 'Metafísica', 'Ética e Filosofia Moral', 'História da Filosofia', 'Filosofia da Religião', 'Introdução à Teologia', 'Latim e Grego'],
+    equipa: [
+      { nome: 'Pe. Carlos Eduardo Neto', cargo: 'Reitor' },
+      { nome: 'Pe. Filipe Augusto Lopes', cargo: 'Vice-Reitor e Prefeito de Disciplina' },
+      { nome: 'Irmã Maria da Graça', cargo: 'Directora Espiritual' },
+    ],
+    stats: [
+      { valor: '6', desc: 'Seminaristas' },
+      { valor: '3', desc: 'Anos de formação' },
+      { valor: '3', desc: 'Membros da Direcção' },
+    ],
+  },
+];
+
 export default function Seminario() {
   return (
     <div>
+      {/* Hero */}
       <section className="bg-dark-900 text-white py-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-primary-300 text-sm uppercase tracking-widest mb-4">A nossa Casa</p>
-          <h1 className="text-5xl font-serif font-bold mb-6">O Seminário</h1>
-          <p className="text-xl text-gray-300 leading-relaxed">Uma casa de formação com décadas de história ao serviço da Igreja em Angola.</p>
+          <p className="text-primary-300 text-sm uppercase tracking-widest mb-4">Arquidiocese do Huambo</p>
+          <h1 className="text-5xl font-serif font-bold mb-6">Seminário Maior de Cristo Rei</h1>
+          <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
+            Uma casa com duas vocações distintas: a Secção de Teologia e a Secção de Filosofia, cada uma com a sua Direcção, equipa e regulamento próprios.
+          </p>
         </div>
       </section>
 
-      {/* Mensagem do Reitor */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-12 items-start">
-            <div className="md:col-span-1 text-center">
-              <div className="w-32 h-32 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl font-bold text-primary-700">R</div>
-              <p className="font-semibold text-gray-900">Pe. Reitor</p>
-              <p className="text-sm text-gray-500">Reitor do Seminário</p>
+      {/* Nota institucional */}
+      <section className="py-12 bg-primary-50 border-b border-primary-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-primary-800 text-base leading-relaxed">
+            O <strong>Seminário Maior de Cristo Rei</strong> é composto por duas Secções canonicamente distintas: a <strong>Secção de Teologia</strong> e a <strong>Secção de Filosofia</strong>. Embora partilhem o mesmo espaço e o mesmo espírito, cada Secção possui direcção autónoma, comunidade própria, programa académico específico e regulamento interno independente.
+          </p>
+        </div>
+      </section>
+
+      {/* Secções */}
+      {seccoes.map((s, idx) => (
+        <section key={s.id} className={`py-20 ${idx % 2 === 1 ? 'bg-gray-50' : ''}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            {/* Cabeçalho da secção */}
+            <div className={`border-l-4 ${s.cor} pl-6 mb-12`}>
+              <span className={`inline-block text-xs px-3 py-1 rounded-full font-semibold mb-3 ${s.badge}`}>
+                {s.titulo}
+              </span>
+              <h2 className="text-3xl font-serif font-bold text-gray-900">{s.titulo}</h2>
             </div>
-            <div className="md:col-span-2">
-              <h2 className="text-3xl font-serif font-bold mb-6">Mensagem do Reitor</h2>
-              <div className="prose prose-gray max-w-none">
-                <p className="text-lg text-gray-600 italic leading-relaxed border-l-4 border-primary-500 pl-4 mb-6">
-                  "O Seminário Maior de Cristo Rei é uma casa onde jovens angolanos se preparam para servir a Deus e ao seu povo como sacerdotes. É uma comunidade onde a oração, o estudo e a fraternidade formam homens de Deus."
+
+            {/* Mensagem do Reitor */}
+            <div className="grid md:grid-cols-3 gap-12 items-start mb-16">
+              <div className="md:col-span-1 text-center">
+                <div className="w-28 h-28 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-primary-700">
+                  {s.reitor.split(' ').slice(-1)[0].charAt(0)}
+                </div>
+                <p className="font-semibold text-gray-900">{s.reitor}</p>
+                <p className="text-sm text-gray-500">{s.cargo}</p>
+              </div>
+              <div className="md:col-span-2">
+                <h3 className="text-2xl font-serif font-bold mb-4">Mensagem do Reitor</h3>
+                <p className="text-gray-600 italic leading-relaxed border-l-4 border-primary-400 pl-4 mb-4 text-base">
+                  {s.citacao}
                 </p>
-                <p className="text-gray-600 leading-relaxed">
-                  Fundado em 1954 pela Arquidiocese do Huambo, o Seminário já formou mais de duzentos sacerdotes que servem em Angola e além-fronteiras. A nossa missão é a formação integral do futuro sacerdote, nas suas dimensões humana, espiritual, intelectual e pastoral.
-                </p>
+                <p className="text-gray-600 leading-relaxed">{s.descricao}</p>
+              </div>
+            </div>
+
+            {/* Stats + Equipa + Disciplinas */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+              {/* Estatísticas */}
+              <div className="card">
+                <h4 className="font-semibold text-gray-900 mb-4">Em números</h4>
+                <div className="space-y-4">
+                  {s.stats.map(({ valor, desc }) => (
+                    <div key={desc} className="flex items-baseline gap-3">
+                      <span className="text-3xl font-bold text-primary-600">{valor}</span>
+                      <span className="text-sm text-gray-500">{desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Equipa */}
+              <div className="card">
+                <h4 className="font-semibold text-gray-900 mb-4">Direcção</h4>
+                <div className="space-y-3">
+                  {s.equipa.map(m => (
+                    <div key={m.nome} className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-600 shrink-0">
+                        {m.nome.split(' ').slice(-1)[0].charAt(0)}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{m.nome}</p>
+                        <p className="text-xs text-gray-500">{m.cargo}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Disciplinas */}
+              <div className="card">
+                <h4 className="font-semibold text-gray-900 mb-4">Disciplinas ({s.anos} anos)</h4>
+                <ul className="space-y-1.5">
+                  {s.disciplinas.map(d => (
+                    <li key={d} className="flex items-center gap-2 text-sm text-gray-700">
+                      <span className="w-1.5 h-1.5 bg-primary-500 rounded-full shrink-0" />
+                      {d}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ))}
 
-      {/* História */}
-      <section className="bg-gray-50 py-20">
+      {/* História comum */}
+      <section className="bg-dark-900 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="section-title text-center mb-12">História e Património</h2>
+          <h2 className="text-3xl font-serif font-bold text-center mb-12">História Comum</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { ano: '1954', titulo: 'Fundação', desc: 'O Seminário é fundado pela Arquidiocese do Huambo para responder às necessidades da Igreja local.' },
-              { ano: '1975', titulo: 'Independência', desc: 'Durante os desafios da independência, o Seminário manteve-se firme na sua missão formativa.' },
-              { ano: '2002', titulo: 'Reconstrução', desc: 'Com o fim da guerra civil, o Seminário inicia uma fase de expansão e modernização das suas instalações.' },
-              { ano: '2010', titulo: 'Crescimento', desc: 'Abertura de novas instalações académicas e aumento do número de seminaristas.' },
-              { ano: '2020', titulo: 'Digitalização', desc: 'Lançamento de ferramentas digitais para apoiar a formação e a gestão académica.' },
-              { ano: 'Hoje', titulo: 'Missão Viva', desc: 'Com 45+ seminaristas, continuamos a formar sacerdotes para Angola e para o mundo.' },
+              { ano: '1954', titulo: 'Fundação', desc: 'O Seminário Maior de Cristo Rei é fundado pela Arquidiocese do Huambo.' },
+              { ano: '1975', titulo: 'Fidelidade', desc: 'Durante a independência, as duas comunidades mantiveram-se firmes na sua missão.' },
+              { ano: '2002', titulo: 'Reconstrução', desc: 'Com o fim da guerra, as duas Secções iniciam uma fase de expansão das suas instalações.' },
+              { ano: '2010', titulo: 'Crescimento', desc: 'Abertura de novas instalações e reorganização das duas Secções com estatutos próprios.' },
+              { ano: '2020', titulo: 'Digitalização', desc: 'Lançamento de ferramentas digitais de gestão académica para as duas Secções.' },
+              { ano: 'Hoje', titulo: 'Missão Viva', desc: 'Com mais de 14 seminaristas nas duas Secções, o Seminário continua a formar sacerdotes para Angola.' },
             ].map(h => (
-              <div key={h.ano} className="card">
-                <div className="text-2xl font-bold text-primary-600 mb-2">{h.ano}</div>
-                <h3 className="font-semibold text-gray-900 mb-2">{h.titulo}</h3>
-                <p className="text-sm text-gray-600">{h.desc}</p>
+              <div key={h.ano} className="bg-white/5 rounded-xl p-6 border border-white/10">
+                <div className="text-2xl font-bold text-primary-400 mb-2">{h.ano}</div>
+                <h3 className="font-semibold text-white mb-2">{h.titulo}</h3>
+                <p className="text-sm text-gray-400">{h.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Infraestruturas */}
+      {/* Infraestruturas partilhadas */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="section-title text-center mb-12">Infraestruturas</h2>
+          <h2 className="section-title text-center mb-4">Infraestruturas Partilhadas</h2>
+          <p className="text-center text-gray-500 text-sm mb-10">Espaços comuns às duas Secções</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { emoji: '📚', nome: 'Biblioteca', desc: '5.000+ volumes' },
-              { emoji: '⛪', nome: 'Capela', desc: 'Capacidade para 200' },
-              { emoji: '🏫', nome: 'Salas de Aula', desc: '10 salas equipadas' },
+              { emoji: '⛪', nome: 'Capela', desc: 'Celebrações comuns' },
               { emoji: '🍽️', nome: 'Refeitório', desc: 'Refeições diárias' },
               { emoji: '⚽', nome: 'Desporto', desc: 'Campo e ginásio' },
               { emoji: '🏥', nome: 'Enfermaria', desc: 'Cuidados básicos' },
               { emoji: '💻', nome: 'Laboratório', desc: 'Informática e internet' },
               { emoji: '🌿', nome: 'Jardins', desc: 'Espaços de oração' },
+              { emoji: '🏫', nome: 'Salas de Aula', desc: 'Separadas por Secção' },
             ].map(i => (
               <div key={i.nome} className="card text-center hover:shadow-md transition-shadow">
                 <div className="text-4xl mb-3">{i.emoji}</div>

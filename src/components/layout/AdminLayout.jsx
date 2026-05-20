@@ -32,6 +32,15 @@ export default function AdminLayout() {
         <div className="p-4 border-b border-gray-700">
           <p className="text-sm font-medium">{user?.nome}</p>
           <p className="text-xs text-gray-400 capitalize">{user?.permissoes}</p>
+          {user?.seccao ? (
+            <span className={`inline-block mt-1.5 text-xs px-2 py-0.5 rounded-full font-medium ${user.seccao === 'teologia' ? 'bg-blue-700 text-blue-100' : 'bg-amber-700 text-amber-100'}`}>
+              {user.seccao === 'teologia' ? 'Secção de Teologia' : 'Secção de Filosofia'}
+            </span>
+          ) : (
+            <span className="inline-block mt-1.5 text-xs px-2 py-0.5 rounded-full font-medium bg-gray-600 text-gray-200">
+              Administração Global
+            </span>
+          )}
         </div>
 
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
@@ -60,7 +69,9 @@ export default function AdminLayout() {
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3 lg:hidden">
           <button onClick={() => setSidebarOpen(true)} className="text-gray-600 hover:text-gray-800"><Menu size={22} /></button>
-          <span className="font-semibold text-gray-800">Administração</span>
+          <span className="font-semibold text-gray-800">
+            {user?.seccao === 'teologia' ? 'Admin · Teologia' : user?.seccao === 'filosofia' ? 'Admin · Filosofia' : 'Administração'}
+          </span>
         </header>
         <main className="flex-1 overflow-y-auto p-4 sm:p-6"><Outlet /></main>
       </div>
