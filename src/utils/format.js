@@ -24,3 +24,18 @@ export const DIAS_SEMANA = {
 export const PERMISSOES_LABEL = {
   seminarista: 'Seminarista', staff: 'Staff', admin: 'Administrador',
 };
+
+export const SECCAO_LABEL = {
+  teologia: 'Secção de Teologia',
+  filosofia: 'Secção de Filosofia',
+};
+
+export const SECCAO_SHORT = {
+  teologia: 'Teologia',
+  filosofia: 'Filosofia',
+};
+
+export const SECCAO_ANOS = {
+  teologia: [1, 2, 3, 4],
+  filosofia: [1, 2, 3],
+};
