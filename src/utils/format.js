@@ -25,6 +25,23 @@ export const PERMISSOES_LABEL = {
   seminarista: 'Seminarista', staff: 'Staff', admin: 'Administrador',
 };
 
+export const CARGO_LABEL = {
+  seminarista: 'Seminarista',
+  professor: 'Professor',
+  funcionario: 'Funcionário',
+  direccao: 'Membro da Direcção',
+  administrador: 'Administrador',
+};
+
+// Ordered list for the "Adicionar" modal
+export const TIPOS_UTILIZADOR = [
+  { cargo: 'administrador', label: 'Administrador',        permissoes: 'admin',      icon: '🛡️' },
+  { cargo: 'seminarista',   label: 'Seminarista',          permissoes: 'seminarista', icon: '📖' },
+  { cargo: 'professor',     label: 'Professor',            permissoes: 'staff',      icon: '🎓' },
+  { cargo: 'funcionario',   label: 'Funcionário',          permissoes: 'staff',      icon: '🏢' },
+  { cargo: 'direccao',      label: 'Membro da Direcção',  permissoes: 'admin',      icon: '⭐' },
+];
+
 export const SECCAO_LABEL = {
   teologia: 'Secção de Teologia',
   filosofia: 'Secção de Filosofia',

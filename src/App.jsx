@@ -3,9 +3,11 @@ import { Suspense, lazy } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/ui/ProtectedRoute';
+import ScrollToTop from './components/ui/ScrollToTop';
 import PublicLayout from './components/layout/PublicLayout';
 import DashboardLayout from './components/layout/DashboardLayout';
 import AdminLayout from './components/layout/AdminLayout';
+import ProfessorLayout from './components/layout/ProfessorLayout';
 
 // Public pages
 import Home from './pages/public/Home';
@@ -39,6 +41,17 @@ import AdminComunicados from './pages/admin/AdminComunicados';
 import AdminRelatorios from './pages/admin/AdminRelatorios';
 import AdminMateriais from './pages/admin/AdminMateriais';
 import AdminDefinicoes from './pages/admin/AdminDefinicoes';
+import AdminNoticias from './pages/admin/AdminNoticias';
+import AdminEventos from './pages/admin/AdminEventos';
+import AdminConteudo from './pages/admin/AdminConteudo';
+
+// Professor
+import ProfessorHome from './pages/professor/ProfessorHome';
+import ProfessorHorarios from './pages/professor/ProfessorHorarios';
+import ProfessorAlunos from './pages/professor/ProfessorAlunos';
+import ProfessorTrabalhos from './pages/professor/ProfessorTrabalhos';
+import ProfessorMateriais from './pages/professor/ProfessorMateriais';
+import ProfessorComunicados from './pages/professor/ProfessorComunicados';
 
 function Loading() {
   return (
@@ -52,6 +65,7 @@ export default function App() {
   return (
     <AuthProvider>
       <Toaster position="top-right" toastOptions={{ duration: 4000, style: { fontSize: '14px' } }} />
+      <ScrollToTop />
       <Routes>
         {/* Public */}
         <Route element={<PublicLayout />}>
@@ -90,11 +104,24 @@ export default function App() {
         <Route path="/admin" element={<ProtectedRoute roles={['admin', 'staff']}><AdminLayout /></ProtectedRoute>}>
           <Route index element={<AdminHome />} />
           <Route path="seminaristas" element={<AdminSeminaristas />} />
+          <Route path="noticias" element={<AdminNoticias />} />
+          <Route path="eventos" element={<AdminEventos />} />
+          <Route path="conteudo" element={<AdminConteudo />} />
           <Route path="pagamentos" element={<AdminPagamentos />} />
           <Route path="comunicados" element={<AdminComunicados />} />
           <Route path="relatorios" element={<AdminRelatorios />} />
           <Route path="materiais" element={<AdminMateriais />} />
           <Route path="definicoes" element={<AdminDefinicoes />} />
+        </Route>
+
+        {/* Professor */}
+        <Route path="/professor" element={<ProtectedRoute roles={['staff']} cargo={['professor']}><ProfessorLayout /></ProtectedRoute>}>
+          <Route index element={<ProfessorHome />} />
+          <Route path="horarios" element={<ProfessorHorarios />} />
+          <Route path="alunos" element={<ProfessorAlunos />} />
+          <Route path="trabalhos" element={<ProfessorTrabalhos />} />
+          <Route path="materiais" element={<ProfessorMateriais />} />
+          <Route path="comunicados" element={<ProfessorComunicados />} />
         </Route>
 
         <Route path="*" element={<div className="min-h-screen flex flex-col items-center justify-center gap-4"><h1 className="text-4xl font-bold text-gray-900">404</h1><p className="text-gray-500">Página não encontrada</p><a href="/" className="btn-primary">Ir para o início</a></div>} />

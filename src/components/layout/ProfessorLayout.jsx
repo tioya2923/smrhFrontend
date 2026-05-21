@@ -1,22 +1,18 @@
 import { NavLink, Outlet, Link } from 'react-router-dom';
-import { LayoutDashboard, Users, CreditCard, Megaphone, BarChart2, Settings, LogOut, Menu, X, Upload, Newspaper, CalendarDays, FileEdit } from 'lucide-react';
+import { LayoutDashboard, Users, Clock, Megaphone, BookOpen, FileText, Upload, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 
 const navItems = [
-  { label: 'Visão Geral', href: '/admin', icon: LayoutDashboard, exact: true },
-  { label: 'Membros e Seminaristas', href: '/admin/seminaristas', icon: Users },
-  { label: 'Notícias', href: '/admin/noticias', icon: Newspaper },
-  { label: 'Eventos', href: '/admin/eventos', icon: CalendarDays },
-  { label: 'Conteúdo', href: '/admin/conteudo', icon: FileEdit },
-  { label: 'Pagamentos', href: '/admin/pagamentos', icon: CreditCard },
-  { label: 'Comunicados', href: '/admin/comunicados', icon: Megaphone },
-  { label: 'Materiais', href: '/admin/materiais', icon: Upload },
-  { label: 'Relatórios', href: '/admin/relatorios', icon: BarChart2 },
-  { label: 'Definições', href: '/admin/definicoes', icon: Settings },
+  { label: 'Visão Geral',   href: '/professor',              icon: LayoutDashboard, exact: true },
+  { label: 'Horários',      href: '/professor/horarios',     icon: Clock },
+  { label: 'Alunos e Notas', href: '/professor/alunos',     icon: Users },
+  { label: 'Trabalhos',     href: '/professor/trabalhos',    icon: FileText },
+  { label: 'Materiais',     href: '/professor/materiais',    icon: Upload },
+  { label: 'Comunicados',   href: '/professor/comunicados',  icon: Megaphone },
 ];
 
-export default function AdminLayout() {
+export default function ProfessorLayout() {
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -27,21 +23,17 @@ export default function AdminLayout() {
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
           <Link to="/" className="flex items-center gap-2 text-sm font-bold">
             <span className="text-primary-400">✝</span>
-            <span>Admin SMRH</span>
+            <span>Portal do Professor</span>
           </Link>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-gray-400 hover:text-white"><X size={20} /></button>
         </div>
 
         <div className="p-4 border-b border-gray-700">
           <p className="text-sm font-medium">{user?.nome}</p>
-          <p className="text-xs text-gray-400 capitalize">{user?.permissoes}</p>
-          {user?.seccao ? (
+          <p className="text-xs text-gray-400">Professor</p>
+          {user?.seccao && (
             <span className={`inline-block mt-1.5 text-xs px-2 py-0.5 rounded-full font-medium ${user.seccao === 'teologia' ? 'bg-blue-700 text-blue-100' : 'bg-amber-700 text-amber-100'}`}>
               {user.seccao === 'teologia' ? 'Secção de Teologia' : 'Secção de Filosofia'}
-            </span>
-          ) : (
-            <span className="inline-block mt-1.5 text-xs px-2 py-0.5 rounded-full font-medium bg-gray-600 text-gray-200">
-              Administração Global
             </span>
           )}
         </div>
@@ -58,9 +50,6 @@ export default function AdminLayout() {
         </nav>
 
         <div className="p-3 border-t border-gray-700">
-          <Link to="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-700 w-full transition-colors mb-1">
-            <LayoutDashboard size={18} /> Meu Painel
-          </Link>
           <button onClick={logout} className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-400 hover:text-red-400 hover:bg-gray-700 w-full transition-colors">
             <LogOut size={18} /> Sair
           </button>
@@ -72,9 +61,7 @@ export default function AdminLayout() {
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="bg-white border-b border-gray-200 px-4 py-3 flex items-center gap-3 lg:hidden">
           <button onClick={() => setSidebarOpen(true)} className="text-gray-600 hover:text-gray-800"><Menu size={22} /></button>
-          <span className="font-semibold text-gray-800">
-            {user?.seccao === 'teologia' ? 'Admin · Teologia' : user?.seccao === 'filosofia' ? 'Admin · Filosofia' : 'Administração'}
-          </span>
+          <span className="font-semibold text-gray-800">Portal do Professor</span>
         </header>
         <main className="flex-1 overflow-y-auto p-4 sm:p-6"><Outlet /></main>
       </div>

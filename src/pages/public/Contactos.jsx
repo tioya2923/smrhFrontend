@@ -1,9 +1,18 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 import { publicAPI } from '../../api';
+import { useConteudo } from '../../hooks/useConteudo';
 import toast from 'react-hot-toast';
 
+const DEFAULTS = {
+  morada: 'Av. da República, s/n\nHuambo, Angola',
+  telefone: '+244 222 000 000',
+  email: 'info@cristorei.ao',
+  horario: 'Seg–Sex: 08:00–16:00\nSáb: 08:00–12:00',
+};
+
 export default function Contactos() {
+  const c = useConteudo('contactos', DEFAULTS);
   const [form, setForm] = useState({ nome: '', email: '', assunto: '', mensagem: '' });
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -18,12 +27,16 @@ export default function Contactos() {
       await publicAPI.submitContacto(form);
       setSent(true);
       toast.success('Mensagem enviada com sucesso!');
-    } catch {
-      toast.error('Erro ao enviar mensagem. Tente mais tarde.');
-    } finally {
-      setLoading(false);
-    }
+    } catch { toast.error('Erro ao enviar mensagem. Tente mais tarde.'); }
+    finally { setLoading(false); }
   }
+
+  const infoItems = [
+    { icon: MapPin, label: 'Morada', value: c.morada },
+    { icon: Phone, label: 'Telefone', value: c.telefone },
+    { icon: Mail, label: 'Email', value: c.email },
+    { icon: Clock, label: 'Horário de Secretaria', value: c.horario },
+  ];
 
   return (
     <div>
@@ -35,18 +48,12 @@ export default function Contactos() {
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-28">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Info */}
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900">Informações</h2>
-              {[
-                { icon: MapPin, label: 'Morada', value: 'Av. da República, s/n\nHuambo, Angola' },
-                { icon: Phone, label: 'Telefone', value: '+244 xxx xxx xxx' },
-                { icon: Mail, label: 'Email', value: 'info@cristorei.ao' },
-                { icon: Clock, label: 'Horário de Secretaria', value: 'Seg–Sex: 08:00–16:00\nSáb: 08:00–12:00' },
-              ].map(({ icon: Icon, label, value }) => (
+              {infoItems.map(({ icon: Icon, label, value }) => (
                 <div key={label} className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center shrink-0">
                     <Icon size={18} className="text-primary-600" />
@@ -59,7 +66,6 @@ export default function Contactos() {
               ))}
             </div>
 
-            {/* Formulário */}
             <div className="lg:col-span-2">
               {sent ? (
                 <div className="card text-center py-16">
@@ -86,12 +92,11 @@ export default function Contactos() {
             </div>
           </div>
 
-          {/* Mapa */}
           <div className="mt-12 rounded-xl overflow-hidden border border-gray-200 h-80 bg-gray-100 flex items-center justify-center">
             <div className="text-center text-gray-400">
               <MapPin size={40} className="mx-auto mb-2" />
-              <p className="text-sm">Integre aqui o Google Maps com a chave API</p>
-              <p className="text-xs">Huambo, Angola</p>
+              <p className="text-sm">Huambo, Angola</p>
+              <p className="text-xs mt-1">{c.morada?.split('\n')[0]}</p>
             </div>
           </div>
         </div>

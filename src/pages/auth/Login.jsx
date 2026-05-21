@@ -20,7 +20,10 @@ export default function Login() {
     setLoading(true);
     try {
       const user = await login(email.trim(), password);
-      const dest = (user.permissoes === 'admin' || user.permissoes === 'staff') ? '/admin' : from;
+      let dest;
+      if (user.cargo === 'professor') dest = '/professor';
+      else if (user.permissoes === 'admin' || user.permissoes === 'staff') dest = '/admin';
+      else dest = from;
       navigate(dest, { replace: true });
       toast.success(`Bem-vindo, ${user.nome.split(' ')[0]}!`);
     } catch (err) {

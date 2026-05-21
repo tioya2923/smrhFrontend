@@ -33,7 +33,7 @@ export default function NoticiaDetalhe() {
         <p className="text-gray-500 text-sm mb-8">{formatDate(noticia.data_publicacao)}</p>
 
         {noticia.imagem_url && (
-          <img src={noticia.imagem_url} alt={noticia.titulo} className="w-full rounded-xl mb-8 max-h-80 object-cover" />
+          <img src={noticia.imagem_url} alt={noticia.titulo} className="w-full rounded-xl mb-8 object-contain" />
         )}
 
         <div className="prose prose-gray max-w-none" dangerouslySetInnerHTML={{ __html: noticia.conteudo }} />

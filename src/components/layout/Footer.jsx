@@ -1,66 +1,95 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Youtube } from 'lucide-react';
+import { Facebook, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+
+const siteMap = [
+  ['Início', '/'],
+  ['Mensagem do Reitor', '/seminario#reitor'],
+  ['História', '/seminario#historia'],
+  ['Comunidade', '/comunidade'],
+  ['Formação', '/formacao'],
+  ['Um dia no Seminário', '/seminario#dia'],
+  ['Ano pastoral', '/formacao#pastoral'],
+  ['Como ajudar', '/ajudar'],
+  ['Rezar pelo Seminário', '/ajudar#oracao'],
+  ['Contactos', '/contactos'],
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-dark-900 text-gray-300 pt-12 pb-6">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-          {/* Brand */}
+    <footer className="bg-primary-700 text-white pt-20 pb-10 mt-24">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-8">
+
+          {/* Mapa do site */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center font-bold text-lg text-white">✝</div>
-              <div>
-                <div className="font-bold text-white">Seminário Maior</div>
-                <div className="text-sm text-primary-300">de Cristo Rei</div>
+            <h4 className="font-bold text-base mb-5">Mapa do site</h4>
+            <ul className="space-y-1.5 text-sm text-white/80">
+              {siteMap.map(([label, href]) => (
+                <li key={href}>
+                  <Link to={href} className="hover:text-white transition-colors">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/ajudar"
+              className="inline-block mt-6 border border-white text-white text-sm font-semibold px-7 py-2 hover:bg-white hover:text-primary-700 transition-colors"
+            >
+              Donativos
+            </Link>
+          </div>
+
+          {/* Contactos */}
+          <div>
+            <h4 className="font-bold text-base mb-5">Contactos</h4>
+            <div className="space-y-3 text-sm text-white/80">
+              <p>
+                <a href="mailto:info@cristorei.ao" className="hover:text-white transition-colors">
+                  Email: info@cristorei.ao
+                </a>
+              </p>
+              <p>Tlf: +244 xxx xxx xxx</p>
+              <div className="mt-2">
+                <p>Morada:</p>
+                <p>Av. da República</p>
+                <p>Huambo, Angola</p>
               </div>
             </div>
-            <p className="text-sm leading-relaxed">
-              Formando sacerdotes ao serviço de Deus e da Igreja em Angola desde 1954.
-            </p>
+            <div className="flex gap-4 mt-6">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors" aria-label="Facebook">
+                <Facebook size={22} />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors" aria-label="Instagram">
+                <Instagram size={22} />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors" aria-label="YouTube">
+                <Youtube size={22} />
+              </a>
+            </div>
           </div>
 
-          {/* Links */}
+          {/* Localização */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Instituição</h4>
-            <ul className="space-y-2 text-sm">
-              {[['O Seminário', '/seminario'], ['Formação', '/formacao'], ['Comunidade', '/comunidade'], ['Blog', '/noticias']].map(([l, h]) => (
-                <li key={h}><Link to={h} className="hover:text-primary-400 transition-colors">{l}</Link></li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Apoio */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Apoie-nos</h4>
-            <ul className="space-y-2 text-sm">
-              {[['Deus Chama-me?', '/vocacao'], ['Como Ajudar', '/ajudar'], ['Apadrinhamento', '/ajudar#apadrinhamento'], ['Pedido de Oração', '/ajudar#oracao']].map(([l, h]) => (
-                <li key={h}><Link to={h} className="hover:text-primary-400 transition-colors">{l}</Link></li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contacto */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Contacto</h4>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-2"><MapPin size={14} className="mt-0.5 text-primary-400 shrink-0" /><span>Av. da República, Huambo, Angola</span></li>
-              <li className="flex items-center gap-2"><Phone size={14} className="text-primary-400 shrink-0" /><a href="tel:+244xxxxxxxxx" className="hover:text-primary-400">+244 xxx xxx xxx</a></li>
-              <li className="flex items-center gap-2"><Mail size={14} className="text-primary-400 shrink-0" /><a href="mailto:info@cristorei.ao" className="hover:text-primary-400">info@cristorei.ao</a></li>
-            </ul>
-            <div className="flex gap-3 mt-4">
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors"><Facebook size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors"><Youtube size={20} /></a>
+            <h4 className="font-bold text-base mb-5">Localização</h4>
+            <div className="rounded overflow-hidden border border-white/20" style={{ height: '170px' }}>
+              {/* Replace the src below with your actual Google Maps embed URL */}
+              <iframe
+                title="Localização Seminário Maior de Cristo Rei"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126094!2d15.739!3d-12.775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ebb2b5c1a7c9f35%3A0x0!2zSHVhbWJv!5e0!3m2!1spt!2sao!4v1700000000000"
+                width="100%"
+                height="170"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
         </div>
 
-        <div className="border-t border-dark-700 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-500">
+        <div className="border-t border-white/20 pt-5 text-center text-xs text-white/55">
           <p>© {new Date().getFullYear()} Seminário Maior de Cristo Rei — Huambo, Angola</p>
-          <div className="flex gap-4">
-            <Link to="/privacidade" className="hover:text-gray-400">Política de Privacidade</Link>
-            <Link to="/termos" className="hover:text-gray-400">Termos de Uso</Link>
-          </div>
         </div>
       </div>
     </footer>
