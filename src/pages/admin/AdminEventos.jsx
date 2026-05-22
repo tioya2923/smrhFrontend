@@ -19,7 +19,7 @@ function ImageUpload({ value, onChange }) {
     setUploading(true);
     try {
       const r = await adminAPI.uploadImagem(file);
-      onChange(BACKEND + r.data.url);
+      onChange(r.data.url);
       toast.success('Imagem carregada');
     } catch { toast.error('Erro ao carregar imagem'); }
     finally { setUploading(false); ref.current.value = ''; }
