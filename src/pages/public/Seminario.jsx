@@ -23,16 +23,6 @@ const DEFAULTS = {
     { ano: '2020', titulo: 'Digitalização', desc: 'Lançamento de ferramentas digitais de gestão académica para as duas Secções.' },
     { ano: 'Hoje', titulo: 'Missão Viva', desc: 'Com mais de 14 seminaristas nas duas Secções, o Seminário continua a formar sacerdotes para Angola.' },
   ],
-  infraestruturas: [
-    { emoji: '📚', nome: 'Biblioteca', desc: '5.000+ volumes' },
-    { emoji: '⛪', nome: 'Capela', desc: 'Celebrações comuns' },
-    { emoji: '🍽️', nome: 'Refeitório', desc: 'Refeições diárias' },
-    { emoji: '⚽', nome: 'Desporto', desc: 'Campo e ginásio' },
-    { emoji: '🏥', nome: 'Enfermaria', desc: 'Cuidados básicos' },
-    { emoji: '💻', nome: 'Laboratório', desc: 'Informática e internet' },
-    { emoji: '🌿', nome: 'Jardins', desc: 'Espaços de oração' },
-    { emoji: '🏫', nome: 'Salas de Aula', desc: 'Separadas por Secção' },
-  ],
 };
 
 const seccoes = [
@@ -89,7 +79,6 @@ export default function Seminario() {
   }
 
   const historia = Array.isArray(c.historia) && c.historia.length ? c.historia : DEFAULTS.historia;
-  const infraestruturas = Array.isArray(c.infraestruturas) && c.infraestruturas.length ? c.infraestruturas : DEFAULTS.infraestruturas;
 
   return (
     <div>
@@ -233,22 +222,6 @@ export default function Seminario() {
         </div>
       </section>
 
-      {/* Infraestruturas */}
-      <section className="py-28">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="section-title text-center mb-4">Infraestruturas Partilhadas</h2>
-          <p className="text-center text-gray-500 text-sm mb-10">Espaços comuns às duas Secções</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {infraestruturas.map((inf, i) => (
-              <div key={i} className="card text-center hover:shadow-md transition-shadow">
-                <div className="text-4xl mb-3">{inf.emoji}</div>
-                <h3 className="font-semibold text-gray-900 mb-1">{inf.nome}</h3>
-                <p className="text-xs text-gray-500">{inf.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

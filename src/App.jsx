@@ -19,6 +19,7 @@ import Ajudar from './pages/public/Ajudar';
 import Contactos from './pages/public/Contactos';
 import Noticias from './pages/public/Noticias';
 import NoticiaDetalhe from './pages/public/NoticiaDetalhe';
+import UmDia from './pages/public/UmDia';
 
 // Auth
 import Login from './pages/auth/Login';
@@ -78,6 +79,7 @@ export default function App() {
           <Route path="/contactos" element={<Contactos />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/noticias/:id" element={<NoticiaDetalhe />} />
+          <Route path="/um-dia" element={<UmDia />} />
           <Route path="/privacidade" element={<div className="max-w-3xl mx-auto py-16 px-4 prose"><h1>Política de Privacidade</h1><p>Esta página está em construção.</p></div>} />
           <Route path="/termos" element={<div className="max-w-3xl mx-auto py-16 px-4 prose"><h1>Termos de Uso</h1><p>Esta página está em construção.</p></div>} />
         </Route>

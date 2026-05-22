@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { adminAPI } from '../../api';
+import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
-import { Save, Plus, Trash2, ChevronDown, ChevronUp, Upload, X } from 'lucide-react';
+import { Save, Plus, Trash2, ChevronDown, ChevronUp, Upload, X, Lock } from 'lucide-react';
 
 // ── Upload / URL de imagem ─────────────────────────────────────────────────────
 function ImagemUpload({ label, value, onChange, hint }) {
@@ -11,6 +12,11 @@ function ImagemUpload({ label, value, onChange, hint }) {
   async function handleFile(e) {
     const file = e.target.files[0];
     if (!file) return;
+    if (file.size > 50 * 1024 * 1024) {
+      toast.error('Ficheiro demasiado grande. Máximo: 50 MB');
+      e.target.value = '';
+      return;
+    }
     setUploading(true);
     try {
       const r = await adminAPI.uploadImagem(file);
@@ -276,10 +282,12 @@ const TABS = [
   { id: 'vocacao', label: 'Deus Chama-me?' },
   { id: 'comunidade', label: 'Comunidade' },
   { id: 'formacao', label: 'Formação' },
+  { id: 'um_dia', label: 'Um Dia' },
   { id: 'equipa', label: 'Equipa Formadora' },
 ];
 
 export default function AdminConteudo() {
+  const { isSuperAdmin } = useAuth();
   const [activeTab, setActiveTab] = useState('homepage');
   const [data, setData] = useState({});
   const [saving, setSaving] = useState(false);
@@ -383,17 +391,49 @@ export default function AdminConteudo() {
 
       // ── Contactos ─────────────────────────────────────────────────────────────
       case 'contactos':
+        if (!isSuperAdmin) {
+          return (
+            <div className="max-w-xl">
+              <div className="flex items-center gap-3 p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800">
+                <Lock size={18} className="shrink-0" />
+                <p className="text-sm">Esta secção é gerida exclusivamente pelo <strong>Administrador Geral</strong>.</p>
+              </div>
+            </div>
+          );
+        }
         return (
-          <div className="space-y-4 max-w-xl">
-            <Campo label="Morada" value={data.morada || ''} onChange={set('morada')} multiline />
+          <div className="space-y-5 max-w-xl">
+            <p className="text-sm text-gray-500">Informações de contacto exibidas no site e no rodapé.</p>
+
+            <SectionHeader>Contacto Geral</SectionHeader>
             <Campo label="Telefone" value={data.telefone || ''} onChange={set('telefone')} />
             <Campo label="Email geral" value={data.email || ''} onChange={set('email')} />
-            <Campo label="Horário de Secretaria" value={data.horario || ''} onChange={set('horario')} multiline />
+            <Campo label="Horário de Secretaria" value={data.horario || ''} onChange={set('horario')} multiline hint="Ex: Seg–Sex: 08:00–16:00" />
+
+            <SectionHeader color="blue">Secção de Teologia — Morada</SectionHeader>
+            <Campo
+              label="Morada da Secção de Teologia"
+              value={data.morada_teologia || ''}
+              onChange={set('morada_teologia')}
+              multiline
+              hint="Endereço físico da Secção de Teologia."
+            />
+
+            <SectionHeader color="amber">Secção de Filosofia — Morada</SectionHeader>
+            <Campo
+              label="Morada da Secção de Filosofia"
+              value={data.morada_filosofia || ''}
+              onChange={set('morada_filosofia')}
+              multiline
+              hint="Endereço físico da Secção de Filosofia."
+            />
+
             <SaveBtn campos={[
-              { chave: 'morada', valor: data.morada, tipo: 'text' },
               { chave: 'telefone', valor: data.telefone, tipo: 'text' },
               { chave: 'email', valor: data.email, tipo: 'text' },
               { chave: 'horario', valor: data.horario, tipo: 'text' },
+              { chave: 'morada_teologia', valor: data.morada_teologia, tipo: 'text' },
+              { chave: 'morada_filosofia', valor: data.morada_filosofia, tipo: 'text' },
             ]} />
           </div>
         );
@@ -661,6 +701,92 @@ export default function AdminConteudo() {
               { chave: 'curriculo_filosofia', valor: data.curriculo_filosofia, tipo: 'json' },
               { chave: 'curriculo_teologia', valor: data.curriculo_teologia, tipo: 'json' },
               { chave: 'horario_tipico', valor: data.horario_tipico, tipo: 'json' },
+            ]} />
+          </div>
+        );
+
+      // ── Um Dia no Seminário ───────────────────────────────────────────────────
+      case 'um_dia':
+        if (!isSuperAdmin) {
+          return (
+            <div className="max-w-xl">
+              <div className="flex items-center gap-3 p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800">
+                <Lock size={18} className="shrink-0" />
+                <p className="text-sm">Esta secção é gerida exclusivamente pelo <strong>Administrador Geral</strong>.</p>
+              </div>
+            </div>
+          );
+        }
+        return (
+          <div className="space-y-10 max-w-3xl">
+            <p className="text-sm text-gray-500">Conteúdo da página «Um Dia no Seminário».</p>
+
+            <div>
+              <SectionHeader>Cabeçalho</SectionHeader>
+              <ImagemUpload label="Imagem de fundo do cabeçalho" value={data.hero_imagem || ''} onChange={set('hero_imagem')} hint="Fotografia exibida no topo da página." />
+              <div className="mt-4">
+                <Campo label="Texto de introdução" value={data.texto_introducao || ''} onChange={set('texto_introducao')} multiline hint="Parágrafo descritivo exibido abaixo do título." />
+              </div>
+            </div>
+
+            <div>
+              <SectionHeader>Horário Típico do Dia</SectionHeader>
+              <p className="text-xs text-gray-400 mb-3">Campo "tipo": use <code>espiritual</code>, <code>academico</code> ou <code>comunitario</code></p>
+              <ListaObjEditor
+                items={Array.isArray(data.horario_tipico) ? data.horario_tipico : []}
+                campos={[
+                  { key: 'hora', label: 'Hora (ex: 06:00)', placeholder: '06:00' },
+                  { key: 'atividade', label: 'Actividade', placeholder: 'Laudes e Oração' },
+                  { key: 'tipo', label: 'Tipo (espiritual / academico / comunitario)', placeholder: 'espiritual' },
+                ]}
+                onChange={set('horario_tipico')}
+              />
+            </div>
+
+            <div>
+              <SectionHeader>Actividades</SectionHeader>
+              <ListaObjEditor
+                items={Array.isArray(data.atividades) ? data.atividades : []}
+                campos={[
+                  { key: 'emoji', label: 'Ícone (emoji)', placeholder: '⚽' },
+                  { key: 'nome', label: 'Nome da actividade', placeholder: 'Desporto' },
+                  { key: 'desc', label: 'Descrição', multiline: true },
+                ]}
+                onChange={set('atividades')}
+              />
+            </div>
+
+            <div>
+              <SectionHeader>Galeria de Fotografias</SectionHeader>
+              <ListaObjEditor
+                items={Array.isArray(data.galeria) ? data.galeria : []}
+                campos={[
+                  { key: 'url', label: 'Fotografia', type: 'image' },
+                  { key: 'legenda', label: 'Legenda (opcional)', placeholder: 'Actividade desportiva' },
+                ]}
+                onChange={set('galeria')}
+              />
+            </div>
+
+            <div>
+              <SectionHeader>Regulamento</SectionHeader>
+              <ListaObjEditor
+                items={Array.isArray(data.regulamento) ? data.regulamento : []}
+                campos={[
+                  { key: 'titulo', label: 'Título da regra', placeholder: 'Silêncio nocturno' },
+                  { key: 'descricao', label: 'Descrição', multiline: true },
+                ]}
+                onChange={set('regulamento')}
+              />
+            </div>
+
+            <SaveBtn campos={[
+              { chave: 'hero_imagem', valor: data.hero_imagem, tipo: 'text' },
+              { chave: 'texto_introducao', valor: data.texto_introducao, tipo: 'text' },
+              { chave: 'horario_tipico', valor: data.horario_tipico, tipo: 'json' },
+              { chave: 'atividades', valor: data.atividades, tipo: 'json' },
+              { chave: 'galeria', valor: data.galeria, tipo: 'json' },
+              { chave: 'regulamento', valor: data.regulamento, tipo: 'json' },
             ]} />
           </div>
         );

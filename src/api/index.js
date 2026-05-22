@@ -74,7 +74,7 @@ export const adminAPI = {
   uploadImagem: (file) => {
     const fd = new FormData();
     fd.append('imagem', file);
-    return api.post('/admin/upload/imagem', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
+    return api.post('/admin/upload/imagem', fd);
   },
 
   // Notícias (admin CRUD)

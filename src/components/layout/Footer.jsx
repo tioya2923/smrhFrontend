@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Youtube } from 'lucide-react';
+import { useConteudo } from '../../hooks/useConteudo';
 
 const siteMap = [
   ['Início', '/'],
@@ -14,7 +15,16 @@ const siteMap = [
   ['Contactos', '/contactos'],
 ];
 
+const DEFAULTS = {
+  email: 'info@cristorei.ao',
+  telefone: '+244 xxx xxx xxx',
+  morada_teologia: 'Huambo, Angola',
+  morada_filosofia: 'Huambo, Angola',
+};
+
 export default function Footer() {
+  const c = useConteudo('contactos', DEFAULTS);
+
   return (
     <footer className="bg-primary-700 text-white pt-20 pb-10 mt-24">
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-8 lg:px-12">
@@ -44,17 +54,30 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-base mb-5">Contactos</h4>
             <div className="space-y-3 text-sm text-white/80">
-              <p>
-                <a href="mailto:info@cristorei.ao" className="hover:text-white transition-colors">
-                  Email: info@cristorei.ao
-                </a>
-              </p>
-              <p>Tlf: +244 xxx xxx xxx</p>
-              <div className="mt-2">
-                <p>Morada:</p>
-                <p>Av. da República</p>
-                <p>Huambo, Angola</p>
-              </div>
+              {c.email && (
+                <p>
+                  <a href={`mailto:${c.email}`} className="hover:text-white transition-colors">
+                    Email: {c.email}
+                  </a>
+                </p>
+              )}
+              {c.telefone && <p>Tlf: {c.telefone}</p>}
+              {c.morada_teologia && (
+                <div className="mt-2">
+                  <p className="text-white/60 text-xs uppercase tracking-wide mb-0.5">Teologia</p>
+                  {c.morada_teologia.split('\n').map((line, i) => (
+                    <p key={i}>{line}</p>
+                  ))}
+                </div>
+              )}
+              {c.morada_filosofia && (
+                <div className="mt-2">
+                  <p className="text-white/60 text-xs uppercase tracking-wide mb-0.5">Filosofia</p>
+                  {c.morada_filosofia.split('\n').map((line, i) => (
+                    <p key={i}>{line}</p>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="flex gap-4 mt-6">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors" aria-label="Facebook">

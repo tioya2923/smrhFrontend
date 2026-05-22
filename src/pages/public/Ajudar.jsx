@@ -13,10 +13,9 @@ const DEFAULTS = {
 };
 
 const METODOS = [
-  { id: 'mcx',         label: 'MCX Express',      icon: '📲', moeda: 'AOA', hint: 'Angola' },
-  { id: 'mbway',       label: 'MBWay',             icon: '📱', moeda: 'EUR', hint: 'Portugal' },
-  { id: 'visa',        label: 'Cartão Visa',        icon: '💳', moeda: 'EUR', hint: 'Internacional' },
-  { id: 'transferencia', label: 'Transferência',   icon: '🏦', moeda: 'EUR', hint: 'EUR · GBP · USD' },
+  { id: 'mcx',   label: 'MCX Express', icon: '📲', moeda: 'AOA', hint: 'Angola' },
+  { id: 'mbway', label: 'MBWay',       icon: '📱', moeda: 'EUR', hint: 'Portugal' },
+  { id: 'visa',  label: 'Cartão Visa', icon: '💳', moeda: 'EUR', hint: 'Internacional' },
 ];
 
 const VALORES_AOA = [5000, 10000, 25000, 50000];
@@ -24,32 +23,9 @@ const VALORES_EUR = [5, 10, 25, 50];
 
 const MBWAY_NUMERO = '920 124 925';
 
-const CONTA_BANCARIA = {
-  beneficiario: 'JOAO BAPTISTA MUENHO DUMBA',
-  iban: 'LT22 3250 0548 1457 9102',
-  bic: 'REVOLT21',
-  banco: 'Revolut Bank UAB',
-  morada: 'Konstitucijos ave. 21B, 08130, Vilnius, Lithuania',
-};
-
-const BIC_CORRESPONDENTE = {
-  EUR: 'CHASDEFX',
-  GBP: 'CHASGB2L',
-  USD: 'CHASGB2L',
-};
-
-function InfoRow({ label, value }) {
-  return (
-    <div className="flex flex-col gap-0.5 py-2 border-b border-gray-100 last:border-0">
-      <span className="text-xs text-gray-400">{label}</span>
-      <span className="text-sm font-semibold text-primary-700 font-mono tracking-wide">{value}</span>
-    </div>
-  );
-}
 
 function DonatePage() {
   const [metodo, setMetodo] = useState('mcx');
-  const [moedaTrf, setMoedaTrf] = useState('EUR');
   const [valor, setValor] = useState('');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -147,11 +123,11 @@ function DonatePage() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3">
-        {/* Valores rápidos */}
+        {/* Valores rápidos — altura fixa para evitar quebra de linha */}
         <div className="flex gap-2">
           {valores.map(v => (
             <button key={v} type="button" onClick={() => setValor(String(v))}
-              className={`flex-1 py-2 rounded-lg text-sm font-medium border transition-colors ${String(v) === valor ? 'bg-primary-600 text-white border-primary-600' : 'border-gray-300 hover:border-primary-400'}`}>
+              className={`flex-1 h-10 rounded-lg text-xs font-medium border transition-colors ${String(v) === valor ? 'bg-primary-600 text-white border-primary-600' : 'border-gray-300 hover:border-primary-400'}`}>
               {fmt(v)}
             </button>
           ))}
@@ -173,63 +149,35 @@ function DonatePage() {
           <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="input" />
         </div>
 
-        {(metodo === 'mcx' || metodo === 'mbway') && (
-          <div>
-            <label className="label">
-              {metodo === 'mcx' ? 'Nº de telefone (Unitel/Movicel) *' : 'Nº de telefone MBWay *'}
-            </label>
-            <input type="tel" value={telefone} onChange={e => setTelefone(e.target.value)}
-              placeholder={metodo === 'mcx' ? '9XX XXX XXX' : '+351 9XX XXX XXX'}
-              className="input" required />
-          </div>
-        )}
-
-        {metodo === 'visa' && !stripeOk && (
-          <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-            Pagamento por cartão temporariamente indisponível. Use outro método.
-          </p>
-        )}
-
-        {/* Transferência Bancária — mostra dados directamente, sem submit */}
-        {metodo === 'transferencia' && (
-          <div className="mt-2">
-            <div className="flex gap-2 mb-4">
-              {['EUR', 'GBP', 'USD'].map(m => (
-                <button key={m} type="button" onClick={() => setMoedaTrf(m)}
-                  className={`flex-1 py-1.5 rounded-lg text-sm font-semibold border transition-colors ${moedaTrf === m ? 'bg-primary-700 text-white border-primary-700' : 'border-gray-200 text-gray-600 hover:border-primary-300'}`}>
-                  {m}
-                </button>
-              ))}
+        {/* Zona condicional com altura fixa — evita que o card mude de tamanho */}
+        <div className="h-[72px]">
+          {(metodo === 'mcx' || metodo === 'mbway') && (
+            <div>
+              <label className="label">
+                {metodo === 'mcx' ? 'Nº de telefone (Unitel/Movicel) *' : 'Nº de telefone MBWay *'}
+              </label>
+              <input type="tel" value={telefone} onChange={e => setTelefone(e.target.value)}
+                placeholder={metodo === 'mcx' ? '9XX XXX XXX' : '+351 9XX XXX XXX'}
+                className="input" required />
             </div>
-            <div className="bg-gray-50 rounded-xl px-4 py-2 border border-gray-100">
-              <InfoRow label="Beneficiário"       value={CONTA_BANCARIA.beneficiario} />
-              <InfoRow label="IBAN"               value={CONTA_BANCARIA.iban} />
-              <InfoRow label="BIC / SWIFT"        value={CONTA_BANCARIA.bic} />
-              <InfoRow label="Banco"              value={CONTA_BANCARIA.banco} />
-              <InfoRow label="Morada do banco"    value={CONTA_BANCARIA.morada} />
-              <InfoRow label="BIC correspondente" value={BIC_CORRESPONDENTE[moedaTrf]} />
-            </div>
-            <p className="text-xs text-gray-400 mt-3 text-center">
-              {moedaTrf === 'EUR' && 'Para transferências nacionais e internacionais em €'}
-              {moedaTrf === 'GBP' && 'Apenas para transferências internacionais em £'}
-              {moedaTrf === 'USD' && 'Apenas para transferências internacionais em $'}
+          )}
+          {metodo === 'visa' && !stripeOk && (
+            <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+              Pagamento por cartão temporariamente indisponível. Use outro método.
             </p>
-          </div>
-        )}
+          )}
+        </div>
 
-        {metodo !== 'transferencia' && (
-          <button type="submit"
-            disabled={loading || (metodo === 'visa' && !stripeOk)}
-            className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed">
-            {loading ? 'A processar…' : `Doar ${valor ? fmt(parseFloat(valor) || 0) : ''}`}
-          </button>
-        )}
+        <button type="submit"
+          disabled={loading || (metodo === 'visa' && !stripeOk)}
+          className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed">
+          {loading ? 'A processar…' : `Doar ${valor ? fmt(parseFloat(valor) || 0) : ''}`}
+        </button>
 
         <p className="text-xs text-gray-400 text-center">
-          {metodo === 'mcx'          && 'Pagamento via MCX Express (Angola)'}
-          {metodo === 'mbway'        && 'Pagamento via MBWay (Portugal)'}
-          {metodo === 'visa'         && 'Pagamento seguro via Stripe'}
-          {metodo === 'transferencia' && 'Transferência bancária via Revolut'}
+          {metodo === 'mcx'   && 'Pagamento via MCX Express (Angola)'}
+          {metodo === 'mbway' && 'Pagamento via MBWay (Portugal)'}
+          {metodo === 'visa'  && 'Pagamento seguro via Stripe'}
         </p>
       </form>
     </div>

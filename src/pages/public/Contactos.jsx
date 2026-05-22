@@ -5,11 +5,27 @@ import { useConteudo } from '../../hooks/useConteudo';
 import toast from 'react-hot-toast';
 
 const DEFAULTS = {
-  morada: 'Av. da República, s/n\nHuambo, Angola',
+  morada_teologia: 'Huambo, Angola',
+  morada_filosofia: 'Huambo, Angola',
   telefone: '+244 222 000 000',
   email: 'info@cristorei.ao',
   horario: 'Seg–Sex: 08:00–16:00\nSáb: 08:00–12:00',
 };
+
+function InfoItem({ icon: Icon, label, value }) {
+  if (!value) return null;
+  return (
+    <div className="flex items-start gap-4">
+      <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center shrink-0">
+        <Icon size={18} className="text-primary-600" />
+      </div>
+      <div>
+        <p className="text-sm font-medium text-gray-900">{label}</p>
+        <p className="text-sm text-gray-600 whitespace-pre-line">{value}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function Contactos() {
   const c = useConteudo('contactos', DEFAULTS);
@@ -31,13 +47,6 @@ export default function Contactos() {
     finally { setLoading(false); }
   }
 
-  const infoItems = [
-    { icon: MapPin, label: 'Morada', value: c.morada },
-    { icon: Phone, label: 'Telefone', value: c.telefone },
-    { icon: Mail, label: 'Email', value: c.email },
-    { icon: Clock, label: 'Horário de Secretaria', value: c.horario },
-  ];
-
   return (
     <div>
       <section className="bg-dark-900 text-white py-24">
@@ -51,21 +60,45 @@ export default function Contactos() {
       <section className="py-28">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="space-y-6">
+
+            {/* Coluna de informações */}
+            <div className="space-y-8">
               <h2 className="text-2xl font-bold text-gray-900">Informações</h2>
-              {infoItems.map(({ icon: Icon, label, value }) => (
-                <div key={label} className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center shrink-0">
-                    <Icon size={18} className="text-primary-600" />
+
+              <InfoItem icon={Phone} label="Telefone" value={c.telefone} />
+              <InfoItem icon={Mail} label="Email" value={c.email} />
+              <InfoItem icon={Clock} label="Horário de Secretaria" value={c.horario} />
+
+              {/* Morada — Teologia */}
+              {c.morada_teologia && (
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
+                    <MapPin size={18} className="text-blue-600" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{label}</p>
-                    <p className="text-sm text-gray-600 whitespace-pre-line">{value}</p>
+                    <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-0.5">Secção de Teologia</p>
+                    <p className="text-sm font-medium text-gray-900">Seminário Maior de Cristo Rei</p>
+                    <p className="text-sm text-gray-600 whitespace-pre-line">{c.morada_teologia}</p>
                   </div>
                 </div>
-              ))}
+              )}
+
+              {/* Morada — Filosofia */}
+              {c.morada_filosofia && (
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center shrink-0">
+                    <MapPin size={18} className="text-amber-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-0.5">Secção de Filosofia</p>
+                    <p className="text-sm font-medium text-gray-900">Seminário Maior de Cristo Rei</p>
+                    <p className="text-sm text-gray-600 whitespace-pre-line">{c.morada_filosofia}</p>
+                  </div>
+                </div>
+              )}
             </div>
 
+            {/* Formulário */}
             <div className="lg:col-span-2">
               {sent ? (
                 <div className="card text-center py-16">
@@ -89,14 +122,6 @@ export default function Contactos() {
                   </form>
                 </div>
               )}
-            </div>
-          </div>
-
-          <div className="mt-12 rounded-xl overflow-hidden border border-gray-200 h-80 bg-gray-100 flex items-center justify-center">
-            <div className="text-center text-gray-400">
-              <MapPin size={40} className="mx-auto mb-2" />
-              <p className="text-sm">Huambo, Angola</p>
-              <p className="text-xs mt-1">{c.morada?.split('\n')[0]}</p>
             </div>
           </div>
         </div>
